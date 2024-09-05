@@ -17,8 +17,8 @@ class Command(BaseCommand):
         self.stdout.write('Downloading vendor static ')
         completed_urls= []
         for name, url in VENDOR_STATICFILES.items():
-            out_path = STATICFILES_VENDOR_DIR / name
-            dl_success = helpers.download_to_local(url, out_path)
+            download_from_path = STATICFILES_VENDOR_DIR / name
+            dl_success = helpers.download_to_local(url, download_from_path)
             if dl_success:
                 completed_urls.append(url)
             else:
