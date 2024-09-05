@@ -52,24 +52,31 @@
                     </form>
                 </div>
                 <!-- Карта товара -->
-                {% for info in goods %}
+                {% for good in goods %}
                 <div class="col-lg-4 col-md-6 p-4">
                     <div class="card border-primary rounded custom-shadow">
-                        
-                        <img src="{% static info.image %}" class="card-img-top" alt="...">
+                        {% if good.image %}
+                        <img src="{{ good.image.url }}" class="card-img-top" alt="...">
+                        {% else %}
+                        <img src="{% static 'deps/images/Not found image.png'%}" class="card-img-top" alt="...">
+                        {% endif %}
                         <div class="card-body">
                             <a href="../goods/product.html">
-                                <p class="card-title">{{ info.name }}</p>
+                                <p class="card-title">{{ good.name }}</p>
                             </a>
-                            <p class="card-text text-truncate">{{ info.description }}</p>
-                            <p class="product_id">id: 02265</p>
+                            <p class="card-text text-truncate">{{ good.description }}</p>
+                            <p class="product_id">id: {{ good.product_id  }}</p>
                             <div class="d-flex justify-content-between">
-                                <p><s>{{ info.price }}</s> $</p>
-                                <p><strong>{{ info.price }} $</strong></p>
-                                <span class="badge bg-warning text-dark">Скидка 10.00 %</span>
+                                {% if good.discount %}
+                                <p><s>{{ good.price }}</s> $</p>
+                                <p><strong>{{ good.total_price }} $</strong></p>
+                                <span class="badge bg-warning text-dark">Скидка {{ good.discount }} %</span>
+                                {% else %}
+                                <p><strong>{{ good.price }} $</strong></p>
+                                {% endif %}
                                 <!-- <p><strong>100.00 $</strong></p> -->
                                 <a href="#" class="btn add-to-cart">
-                                    <img class="mx-1" src="{% static 'deps/icons/cart-plus.svg' %}"" alt="Catalog Icon"
+                                    <img class="mx-1" src="{% static 'deps/icons/cart-plus.svg' %}" alt="Catalog Icon"
                                         width="32" height="32">
                                 </a>
                             </div>

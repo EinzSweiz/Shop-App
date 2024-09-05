@@ -19,6 +19,7 @@ from django.urls import path, include
 from main import urls as mainurls
 from goods import urls as goodsurls
 from django.conf import settings
+from django.conf.urls.static import static
 
 DEBUG = getattr(settings, 'DEBUG')
 
@@ -26,8 +27,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(mainurls)),
     path('catalog/', include(goodsurls)),
-] 
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
 if DEBUG:
     urlpatterns += [
-        path('__debu__/', include('debug_toolbar.urls'))
+        path('__debug__/', include('debug_toolbar.urls')),
     ]
