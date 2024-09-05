@@ -1,0 +1,58 @@
+[
+    {
+        "model": "goods.categories",
+        "pk": 8,
+        "fields": {
+            "name": "All Products",
+            "slug": "all-products"
+        }
+    },
+    {
+        "model": "goods.categories",
+        "pk": 9,
+        "fields": {
+            "name": "Bedroom",
+            "slug": "bedroom"
+        }
+    },
+    {
+        "model": "goods.categories",
+        "pk": 11,
+        "fields": {
+            "name": "Livingroom",
+            "slug": "livingroom"
+        }
+    },
+    {
+        "model": "goods.categories",
+        "pk": 12,
+        "fields": {
+            "name": "Kitchen",
+            "slug": "kitchen"
+        }
+    },
+    {
+        "model": "goods.categories",
+        "pk": 13,
+        "fields": {
+            "name": "Accessories",
+            "slug": "accessories"
+        }
+    },
+    {
+        "model": "goods.categories",
+        "pk": 15,
+        "fields": {
+            "name": "Decor",
+            "slug": "decor"
+        }
+    },
+    {
+        "model": "goods.categories",
+        "pk": 16,
+        "fields": {
+            "name": "Office",
+            "slug": "office"
+        }
+    }
+]

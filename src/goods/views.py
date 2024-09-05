@@ -1,7 +1,6 @@
 from django.shortcuts import render
 
 
-
 def catalog(request):
     context = {
         'title': 'Home-Catalog',
@@ -62,7 +61,7 @@ def catalog(request):
          'price': 15.00},
 
          {'image': 'deps/images/goods/strange table.jpg',
-         'name': 'Прикроватный столик',
+         'name': 'Прикроватный столик странный',
          'description': 'Столик, довольно странный на вид, но подходит для размещения рядом с кроватью.',
          'price': 25.00},
         ]

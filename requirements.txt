@@ -5,3 +5,5 @@ psycopg[binary]
 dj-database-url
 requests
 whitenoise
+pillow
+ipython
