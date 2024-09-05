@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #myapps
     'main.apps.MainConfig',
-    'commando.apps.CommandoConfig',
     'goods.apps.GoodsConfig'
 ]
 
