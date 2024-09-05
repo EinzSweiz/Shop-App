@@ -7,3 +7,4 @@ requests
 whitenoise
 pillow
 ipython
+django-debug-toolbar

@@ -18,8 +18,16 @@ from django.contrib import admin
 from django.urls import path, include
 from main import urls as mainurls
 from goods import urls as goodsurls
+from django.conf import settings
+
+DEBUG = getattr(settings, 'DEBUG')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(mainurls)),
     path('catalog/', include(goodsurls)),
-]
+] 
+if DEBUG:
+    urlpatterns += [
+        path('__debu__/', include('debug_toolbar.urls'))
+    ]

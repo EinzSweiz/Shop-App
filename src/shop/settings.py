@@ -23,7 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('DJANGO_SECRET_KEY')# SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = config('DEBUG', cast=bool, default=False)
+DEBUG = config('DJANGO_DEBUG', cast=bool)
+
+print('Debug: ', DEBUG, type(DEBUG))
+
+
 
 ALLOWED_HOSTS = [
     '.railway.app'
@@ -34,6 +38,11 @@ if DEBUG:
         'localhost'
     ]
 
+INTERNAL_IPS = [
+    'localhost',
+    '127.0.0.1',
+
+]
 
 # Application definition
 
@@ -44,9 +53,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #third part apps
+    'debug_toolbar',
     #myapps
     'main.apps.MainConfig',
-    'goods.apps.GoodsConfig'
+    'goods.apps.GoodsConfig',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
