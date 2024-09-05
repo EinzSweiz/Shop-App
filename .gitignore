@@ -1,5 +1,7 @@
 #ignore vendor static files 
 src/staticfiles/vendors
+src/commando
+src/helpers
 #ignore local cdn
 local-cdn/
 # Byte-compiled / optimized / DLL files
