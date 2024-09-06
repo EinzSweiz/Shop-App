@@ -15,3 +15,7 @@ def about(request):
         'content': 'About Us'
     }
     return render(request, 'main/about.html', context)
+
+
+def custom_404_view(request, exception):
+    return render(request, '404error.html')

@@ -19,8 +19,8 @@ from django.urls import path, include
 from main import urls as mainurls
 from goods import urls as goodsurls
 from django.conf import settings
+from main.views import custom_404_view
 from django.conf.urls.static import static
-
 DEBUG = getattr(settings, 'DEBUG')
 
 urlpatterns = [
@@ -34,3 +34,5 @@ if DEBUG:
     urlpatterns += [
         path('__debug__/', include('debug_toolbar.urls')),
     ]
+
+handler404 = custom_404_view

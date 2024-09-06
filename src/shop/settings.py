@@ -30,7 +30,7 @@ print('Debug: ', DEBUG, type(DEBUG))
 
 
 ALLOWED_HOSTS = [
-    '.railway.app'
+    '.railway.app',
 ]
 if DEBUG:
     ALLOWED_HOSTS += [
