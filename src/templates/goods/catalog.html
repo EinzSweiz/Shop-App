@@ -22,11 +22,14 @@
                         Фильтры
                     </button>
             
-                    <form action="{% url 'goods:catalog' slug_url %}" method="get" class="dropdown-menu bg-dark" data-bs-theme="dark">
+                    <form action="{% if request.GET.q%}{% url 'goods:search' %}{% else %}
+                    {% url 'goods:catalog' slug_url %}{% endif %}" method="get" class="dropdown-menu bg-dark" data-bs-theme="dark">
                         <div class="form-check text-white mx-3">
                             <input class="form-check-input" type="checkbox" name="on_sale" id="flexCheckDefault" value="on"
                             {% if request.GET.on_sale == 'on' %} checked {% endif %}>
-                            <!-- <input type="hidden" name="q" value="request.GET.q"> -->
+                            {% if request.GET.q%}
+                            <input type="hidden" name="q" value="{{ request.GET.q}}">
+                            {% endif %}
                             <label class="form-check-label" for="flexCheckDefault">
                                 Товары по акции
                             </label>
@@ -59,6 +62,12 @@
         </form>
     </div>
     <!-- Карта товара -->
+     {% if request.GET.q %}
+     <h3 class="mt-4">Result of search for request {{ request.GET.q }}</h3>
+     {% if not goods %}
+     <h2 class="mt-4"> Unfortunately nothing found </h2>
+     {% endif %}
+     {% endif %}
     {% for good in goods %}
     <div class="col-lg-4 col-md-6 p-4">
         <div class="card border-primary rounded custom-shadow">
@@ -69,9 +78,25 @@
             {% endif %}
             <div class="card-body">
                 <a href="{% url 'goods:product' good.slug %}">
-                    <p class="card-title">{{ good.name }}</p>
+                    <p class="card-title">
+                        {% autoescape off %}
+                        {% if good.headline %}
+                            {{ good.headline }}
+                        {% else %}
+                            {{ good.name }}
+                        {% endif %}
+                        {% endautoescape %}
+                    </p>
                 </a>
-                <p class="card-text text-truncate">{{ good.description }}</p>
+                <p class="card-text text-truncate">
+                    {% autoescape off %}
+                    {% if good.bodyline %}
+                        {{ good.bodyline }}
+                    {% else %}
+                        {{ good.description }}
+                    {% endif %}
+                    {% endautoescape %}
+                </p>
                 <p class="product_id">id: {{ good.product_id  }}</p>
                 <div class="d-flex justify-content-between">
                     {% if good.discount %}
@@ -114,7 +139,7 @@
                 
                 <li class="page-item {% if not goods.has_next%} disabled {% endif %}">
                     <a class="page-link" href="{% if goods.has_next %}
-                    ?{% change_params page=good.next_page_number%} {% endif %}">Next</a>
+                    ?{% change_params page=goods.next_page_number%} {% endif %}">Next</a>
                 </li>
             </div>
         </ul>
