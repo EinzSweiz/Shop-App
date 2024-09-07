@@ -1,8 +1,9 @@
-
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout, authenticate, login
-from .forms import UserLoginForm, UserRegistrationForm
+from .forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 from django.contrib import messages
+from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 
 def login_user(request):
     if request.method == 'POST':
@@ -13,7 +14,7 @@ def login_user(request):
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
-                messages.success(request, 'You are logged in')
+                messages.success(request, f'{username} you are successfully logged in ')
                 return redirect('main:home')
             else:
                 # Add a non-field error if authentication fails
@@ -40,22 +41,35 @@ def register_user(request):
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
+                messages.success(request, f'{username} you are successfully registered ')
                 return redirect('main:home')
     else:
         form = UserRegistrationForm()
     context = {
-        'title': 'Login User',
+        'title': 'Register User',
         'form': form
     }
     return render(request, 'users/registration.html', context)
 
 def logout_user(request):
+    messages.success(request, f'{request.user.username} you are successfully logged out ')
     logout(request)
     return redirect('main:home')
     
-
+@login_required
 def profile_user(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=request.user, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile updated successfully')
+            return redirect('users:profile')
+    else:
+        form = UserProfileForm(instance=request.user)
+    
     context = {
-        'title': 'Profile User'
+        'title': 'Profile User',
+        'form': form
     }
     return render(request, 'users/profile.html', context)
+
