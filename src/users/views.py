@@ -4,7 +4,6 @@ from .forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
-
 def login_user(request):
     if request.method == 'POST':
         form = UserLoginForm(request, data=request.POST)  # Pass request and data for authentication
@@ -15,6 +14,9 @@ def login_user(request):
             if user:
                 login(request, user)
                 messages.success(request, f'{username} you are successfully logged in ')
+                next_url = request.POST.get('next', None)
+                if next_url:
+                    return redirect(next_url)    
                 return redirect('main:home')
             else:
                 # Add a non-field error if authentication fails
@@ -51,6 +53,7 @@ def register_user(request):
     }
     return render(request, 'users/registration.html', context)
 
+@login_required
 def logout_user(request):
     messages.success(request, f'{request.user.username} you are successfully logged out ')
     logout(request)
