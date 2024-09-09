@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load cards_tag %}
+{% user_cards request as cards %}
 {% block content %}
 <div class="row">
     <div class="container mt-5">
@@ -11,9 +13,11 @@
                     {% include 'includes/included_card.html' %}
                     <!-- Закончилась разметка корзины -->
                 </div>
+                {% if cards.final_price > 0 %}
                 <a class="btn btn-dark" href="../orders/create_order.html">
                     Оформить заказ
                 </a>
+                {% endif %}
             </div>
         </div>
     </div>

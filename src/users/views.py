@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import logout, authenticate, login
 from .forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 from django.contrib import messages
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.decorators import login_required
 def login_user(request):
     if request.method == 'POST':
@@ -15,7 +15,7 @@ def login_user(request):
                 login(request, user)
                 messages.success(request, f'{username} you are successfully logged in ')
                 next_url = request.POST.get('next', None)
-                if next_url:
+                if next_url and next_url != reverse('users:logout'):
                     return redirect(next_url)    
                 return redirect('main:home')
             else:

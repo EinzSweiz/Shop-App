@@ -17,9 +17,6 @@ def bascket_add(request, product_slug):
     return redirect(referer)
 
 def bascket_change(request, product_slug):
-    pass
-
-def bascket_remove(request, product_slug):
     product = Products.objects.get(slug=product_slug)
     if request.user.is_authenticated:
         card = Card.objects.filter(user=request.user, product=product).first()
@@ -28,5 +25,11 @@ def bascket_remove(request, product_slug):
             card.save()
         elif card and card.quantity == 0:
             card.delete()
+    referer = request.META.get('HTTP_REFERER', 'main:home')
+    return redirect(referer)
+
+def bascket_remove(request, card_id):
+    card = Card.objects.get(id=card_id)
+    card.delete()
     referer = request.META.get('HTTP_REFERER', 'main:home')
     return redirect(referer)
