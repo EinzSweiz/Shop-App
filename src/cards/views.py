@@ -24,7 +24,7 @@ def bascket_add(request):
     )
     response_data = {
         'message': 'Product added',
-        'card_items_html': card_items_html
+        'cart_items_html': card_items_html
     }
     return JsonResponse(response_data)
 
@@ -42,8 +42,20 @@ def bascket_change(request):
 #     return redirect(referer)
 
 def bascket_remove(request):
-    pass
-    # card = Card.objects.get(id=card_id)
-    # card.delete()
-    # referer = request.META.get('HTTP_REFERER', 'main:home')
-    # return redirect(referer)
+    cart_id = request.POST.get('cart_id')
+    card = Card.objects.get(id=cart_id)
+    quantity = card.quantity
+    card.delete()
+
+    user_card = get_user_cards(request)
+    cart_items_html = render_to_string(
+        'includes/included_card.html',
+        {'cards': user_card},
+        request=request
+    )
+    response_data = {
+        'message': 'Product removed',
+        'cart_items_html': cart_items_html,
+        'quantity_deleted': quantity
+    }
+    return JsonResponse(response_data)
