@@ -18,7 +18,7 @@
                     class="img-thumbnail" data-bs-toggle="modal" data-bs-target="#imageModal1">
             </div>
             <div class="col-md-4 ">
-                <p class="product_id mt-3">id: 002654</p>
+                <p class="product_id mt-3">id: {{ product.id }}</p>
             </div>
             <!-- Увеличить изображение в модальном окне -->
             <div class="modal fade" id="imageModal1" tabindex="-1"
@@ -43,8 +43,9 @@
             <p class="card-text">Цена: <strong>{{ product.total_price }} $</strong></p>
             <h5 class="card-title">{{ product.name }}</h5>
             <p class="card-text">{{ product.description }}</p>
-            <a href="{% url 'cards:add_product' product.slug %}" class="btn btn-dark add-to-cart">Добавить в корзину</a>
-            <a href="javascript:history.back()" class="btn btn-danger add-to-cart">Bернуться</a>
+            <a href="{% url 'cards:add_product' %}" class="btn btn-dark add-to-cart" data-product-id="{{ product.id }}">Добавить в корзину</a>
+            {% csrf_token %}
+            <a href="#" class="btn btn-danger" onclick="history.back()">Bернуться</a>
         </div>
     </div>
 </div>

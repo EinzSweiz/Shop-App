@@ -14,14 +14,14 @@
                     <div class="col p-0">
                         <div class="input-group">
                             <span class="input-group-btn">
-                                <a href="{% url 'cards:change_product' card.product.slug %}">
+                                <a href="{% url 'cards:change_product' %}">
                                 <button type="button" class="btn btn-dark btn-sm decrement"
                                     data-cart-id="" data-cart-change-url="">-</button> </a>
                             </span>
                             <input type="text" class="form-control number" value="{{ card.quantity }}"
                                 readonly>
                             <span class="input-group-btn">
-                                <a href="{% url 'cards:add_product' card.product.slug %}"> <button type="button" class="btn btn-dark btn-sm increment"
+                                <a href="{% url 'cards:add_product' %}"> <button type="button" class="btn btn-dark btn-sm increment"
                                     data-cart-id="" data-cart-change-url="">+</button></a>
                             </span>
                         </div>
@@ -31,7 +31,7 @@
                     </div>
                     <div class="col p-0"><strong>{{ card.products_price }} $</strong></div>
                     <div class="col p-0">
-                        <a href="{% url 'cards:remove_product' card.id %}" class="remove-from-cart" data-cart-id="">
+                        <a href="{% url 'cards:remove_product' %}" class="remove-from-cart" data-cart-id="">
                             <img class="mx-1" src="{% static 'deps/icons/trash3-fill.svg' %}"
                                 alt="Catalog Icon" width="16" height="16">
                         </a>

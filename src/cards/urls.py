@@ -3,8 +3,8 @@ from cards import views
 app_name = 'cards'
 
 urlpatterns = [
-    path('add_product/<slug:product_slug>', views.bascket_add, name='add_product'),
-    path('change_product/<slug:product_slug>', views.bascket_change, name='change_product'),
-    path('remove_product/<int:card_id>', views.bascket_remove, name='remove_product'),
+    path('add_product/', views.bascket_add, name='add_product'),
+    path('change_product/', views.bascket_change, name='change_product'),
+    path('remove_product/', views.bascket_remove, name='remove_product'),
 
 ]   

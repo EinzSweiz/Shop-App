@@ -108,7 +108,8 @@
                     <p><strong>{{ good.price }} $</strong></p>
                     {% endif %}
                     <!-- <p><strong>100.00 $</strong></p> -->
-                    <a href="{% url 'cards:add_product' good.slug %}" class="btn add-to-cart">
+                    <a href="{% url 'cards:add_product' %}" class="btn add-to-cart" data-product-id="{{ good.id }}">
+                        {% csrf_token %}
                         <img class="mx-1" src="{% static 'deps/icons/cart-plus.svg' %}" alt="Catalog Icon"
                             width="32" height="32">
                     </a>

@@ -1,10 +1,11 @@
 from django import template
 from cards.models import Card
-
+from cards.utils import get_user_cards
+     
 
 register = template.Library()
 
 
 @register.simple_tag()
 def user_cards(request):
-    return Card.objects.filter(user=request.user)
+    return get_user_cards(request)
