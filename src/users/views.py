@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout, authenticate, login
+
+from cards.models import Card
 from .forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse
@@ -11,9 +13,16 @@ def login_user(request):
             username = form.cleaned_data['username']  # Access cleaned data
             password = form.cleaned_data['password']  # Access cleaned data
             user = authenticate(username=username, password=password)
+
+            session_key = request.session.session_key
+
             if user:
                 login(request, user)
                 messages.success(request, f'{username} you are successfully logged in ')
+
+                if session_key:
+                    Card.objects.filter(session_key=session_key).update(user=user)
+
                 next_url = request.POST.get('next', None)
                 if next_url and next_url != reverse('users:logout'):
                     return redirect(next_url)    
@@ -38,12 +47,17 @@ def register_user(request):
         form = UserRegistrationForm(data=request.POST)
         if form.is_valid():
             form.save()
+
+            session_key = request.session.session_key
+
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
                 messages.success(request, f'{username} you are successfully registered ')
+                if session_key:
+                    Card.objects.filter(session_key=session_key).update(user=user)
                 return redirect('main:home')
     else:
         form = UserRegistrationForm()

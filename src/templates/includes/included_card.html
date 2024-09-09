@@ -14,15 +14,15 @@
                     <div class="col p-0">
                         <div class="input-group">
                             <span class="input-group-btn">
-                                <a href="{% url 'cards:change_product' %}">
+                            
                                 <button type="button" class="btn btn-dark btn-sm decrement"
-                                    data-cart-id="" data-cart-change-url="">-</button> </a>
+                                    data-cart-id="{{ card.id }}" data-cart-change-url="{% url 'cards:change_product' %}">-</button>
                             </span>
                             <input type="text" class="form-control number" value="{{ card.quantity }}"
                                 readonly>
                             <span class="input-group-btn">
-                                <a href="{% url 'cards:add_product' %}"> <button type="button" class="btn btn-dark btn-sm increment"
-                                    data-cart-id="" data-cart-change-url="">+</button></a>
+                                <button type="button" class="btn btn-dark btn-sm increment"
+                                    data-cart-id="{{ card.id }}" data-cart-change-url="{% url 'cards:change_product' %}">+</button>
                             </span>
                         </div>
                     </div>

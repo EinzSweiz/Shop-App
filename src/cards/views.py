@@ -18,9 +18,27 @@ def bascket_add(request):
         else:
             Card.objects.create(user=request.user, product=product, quantity=1)
     
+    else:
+        carts = Card.objects.filter(
+            session_key=request.session.session_key,
+            product=product)
+        if carts.exists():
+            cart = carts.first()
+            if cart:
+                cart.quantity += 1
+                cart.save()
+        else:
+            Card.objects.create(
+                session_key=request.session.session_key,
+                product=product,
+                quantity=1
+            )
+        
     user_card = get_user_cards(request)
     card_items_html =  render_to_string(
-        'includes/included_card.html', {'cards': user_card}, request=request
+        'includes/included_card.html', 
+        {'cards': user_card}, 
+        request=request
     )
     response_data = {
         'message': 'Product added',
@@ -29,17 +47,24 @@ def bascket_add(request):
     return JsonResponse(response_data)
 
 def bascket_change(request):
-    pass
-#     product = Products.objects.get(slug=product_slug)
-#     if request.user.is_authenticated:
-#         card = Card.objects.filter(user=request.user, product=product).first()
-#         if card and card.quantity > 0:
-#             card.quantity -= 1
-#             card.save()
-#         elif card and card.quantity == 0:
-#             card.delete()
-#     referer = request.META.get('HTTP_REFERER', 'main:home')
-#     return redirect(referer)
+    cart_id = request.POST.get('cart_id') 
+    quantity = request.POST.get('quantity')
+    cart = Card.objects.get(id=cart_id)
+    cart.quantity = quantity
+    cart.save()
+    update_quantity = cart.quantity
+    cart = get_user_cards(request)
+    cart_items_html = render_to_string(
+        'includes/included_card.html',
+        {'carts': cart},
+        request=request
+    )
+    response_data = {
+        'message': 'Quantity changed',
+        'cart_items_html': cart_items_html,
+        'quantity': update_quantity
+    }
+    return JsonResponse(response_data)
 
 def bascket_remove(request):
     cart_id = request.POST.get('cart_id')
