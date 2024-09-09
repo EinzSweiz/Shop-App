@@ -76,3 +76,7 @@ def profile_user(request):
     }
     return render(request, 'users/profile.html', context)
 
+
+def users_cards(request):
+    return render(request, 'users/users-card.html')
+

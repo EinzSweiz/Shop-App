@@ -19,6 +19,7 @@ from django.urls import path, include
 from main import urls as mainurls
 from goods import urls as goodsurls
 from users import urls as usersurls
+from cards import urls as cardsurls
 from django.conf import settings
 from main.views import custom_404_view
 from django.conf.urls.static import static
@@ -29,6 +30,7 @@ urlpatterns = [
     path('', include(mainurls)),
     path('catalog/', include(goodsurls)),
     path('user/', include(usersurls)),
+    path('bascket/', include(cardsurls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
