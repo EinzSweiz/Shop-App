@@ -1,11 +1,32 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from goods.models import Products
+from .models import Card
 
+def bascket_add(request, product_slug):
+    product = Products.objects.get(slug=product_slug)
+    if request.user.is_authenticated:
+        cards = Card.objects.filter(user=request.user, product=product)
+        if cards.exists():
+            card =  cards.first()
+            if card:
+                card.quantity += 1
+                card.save()
+        else:
+            Card.objects.create(user=request.user, product=product, quantity=1)
+    referer = request.META.get('HTTP_REFERER', 'main:home')
+    return redirect(referer)
 
-def backet_add(request, product_id):
+def bascket_change(request, product_slug):
     pass
 
-def backet_change(request, product_id):
-    pass
-
-def backet_remove(request, product_id=1):
-    pass
+def bascket_remove(request, product_slug):
+    product = Products.objects.get(slug=product_slug)
+    if request.user.is_authenticated:
+        card = Card.objects.filter(user=request.user, product=product).first()
+        if card and card.quantity > 0:
+            card.quantity -= 1
+            card.save()
+        elif card and card.quantity == 0:
+            card.delete()
+    referer = request.META.get('HTTP_REFERER', 'main:home')
+    return redirect(referer)

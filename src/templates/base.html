@@ -1,5 +1,7 @@
 {% load static %}
 {% load goods_tags %}
+{% load cards_tag %}
+{% user_cards request as cards  %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,7 +59,7 @@
                                 Мой профиль
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item  text-white" href="carts/cart.html">Корзина</a></li>
+                                <li><a class="dropdown-item  text-white" href="{% url 'users:users-cards' %}">Корзина</a></li>
                                 <li><a class="dropdown-item  text-white" href="{% url 'users:profile' %}">Личный кабинет</a>
                                 </li>
                                 {% if user.is_admin or user.is_staff %}
@@ -100,37 +102,7 @@
                     </ul>
                 </div>
                 <!-- Значек корзины, вызывает модальное окно -->
-                <div>
-                    <button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton"
-                        aria-expanded="false">
-                        <img class="mx-1" src="{% static 'deps/icons/basket2-fill.svg' %}" alt="Catalog Icon" width="24"
-                            height="24">
-                        <span id="goods-in-cart-count">0</span>
-                    </button>
-                </div>
-                <!-- Разметка модального окна корзины -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <h3 class="text-center mb-4">Корзина</h3>
-                                <div class="container" id="cart-items-container">
-                                    <!-- Разметка корзины -->
-                                    {% include 'includes/included_card.html' %}
-                                    <!-- Закончилась разметка корзины -->
-                                </div>
-                                <a class="btn btn-dark" href="orders/create_order.html">
-                                    Оформить заказ
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% block modal_card%} {% endblock %}
                 <!-- Закончилась разметка модального окна -->
             </div>
         </div>

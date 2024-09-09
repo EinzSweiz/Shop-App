@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load goods_tags %}
-{%block css %} 
 
+
+{% block modal_card %}
+{% include 'includes/card_button.html' %}
 {% endblock %}
-
 
 {% block content %}
 <div class="container">
@@ -67,7 +68,7 @@
      {% if not goods %}
      <h2 class="mt-4"> Unfortunately nothing found </h2>
      {% endif %}
-     {% endif %}
+     {% endif %} 
     {% for good in goods %}
     <div class="col-lg-4 col-md-6 p-4">
         <div class="card border-primary rounded custom-shadow">
@@ -107,7 +108,7 @@
                     <p><strong>{{ good.price }} $</strong></p>
                     {% endif %}
                     <!-- <p><strong>100.00 $</strong></p> -->
-                    <a href="#" class="btn add-to-cart">
+                    <a href="{% url 'cards:add_product' good.slug %}" class="btn add-to-cart">
                         <img class="mx-1" src="{% static 'deps/icons/cart-plus.svg' %}" alt="Catalog Icon"
                             width="32" height="32">
                     </a>
