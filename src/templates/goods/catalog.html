@@ -78,7 +78,7 @@
             <img src="{% static 'deps/images/Not found image.png'%}" class="card-img-top" alt="...">
             {% endif %}
             <div class="card-body">
-                <a href="{% url 'goods:product' good.slug %}">
+                <a href="{{ good.get_absolute_url }}">
                     <p class="card-title">
                         {% autoescape off %}
                         {% if good.headline %}

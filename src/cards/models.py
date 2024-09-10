@@ -30,4 +30,8 @@ class Card(models.Model):
         return round(self.product.total_price() * self.quantity, 2)
 
     def __str__(self) -> str:
-        return f'Backet {self.user} | Product {self.product} | Quantity {self.quantity}'
+        if self.user:
+            return f'Bascket {self.user.username} | Product {self.product.name} | Quantity {self.quantity}'
+        return f'Bascket Guest | Product {self.product.name} | Quantity {self.quantity}'
+ 
+    

@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 
 class Categories(models.Model):
     name = models.CharField(max_length=200, unique=True, verbose_name="Name")
@@ -25,7 +25,7 @@ class Products(models.Model):
     discount = models.DecimalField(
         max_digits=4, decimal_places=2, default=0.00, verbose_name="Discount in %"
     )
-    qunatity = models.PositiveIntegerField(default=0)
+    quantity = models.PositiveIntegerField(default=0)
     category = models.ForeignKey(Categories, on_delete=models.PROTECT)
 
     class Meta:
@@ -42,4 +42,7 @@ class Products(models.Model):
     
     def total_price(self):
         return round(self.price - (self.price*self.discount/100), 2)
+    
+    def get_absolute_url(self):
+        return reverse('goods:product', kwargs={'product_slug': self.slug})
     
