@@ -24,17 +24,17 @@
                             <input type="text" class="form-control" id="id_first_name"
                             value="{% if form.first_name.value %}{{ form.first_name.value }}{% endif %}"
                                 name="first_name" required>
-                                {% if form.first_name.error %}
-                                <div class="alert alert-danger alert-dismissible fade show ">{{ form.first_name.error }}</div>
+                                {% if form.first_name.errors %}
+                                <div class="alert alert-danger alert-dismissible fade show ">{{ form.first_name.errors }}</div>
                                 {% endif %}
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="id_last_name" class="form-label">Фамилия*:</label>
                             <input type="text" class="form-control" id="id_last_name" name="last_name"
-                            value="{% if form.last_name.value }{{ form.last_name.value }}{% endif %}"
+                            value="{% if form.last_name.value %}{{ form.last_name.value }}{% endif %}"
                              required>
-                             {% if form.last_name.error %}
-                             <div class="alert alert-danger alert-dismissible fade show ">{{ form.last_name.error }}</div>
+                             {% if form.last_name.errors %}
+                             <div class="alert alert-danger alert-dismissible fade show ">{{ form.last_name.errors }}</div>
                              {% endif %}
                         </div>
                         <div class="col-md-6 mb-3">
@@ -42,8 +42,8 @@
                             <input type="text" class="form-control" id="id_phone_number" name="phone_number"
                                 placeholder="В формате: XXX-XXX-XX-XX"
                                 required>
-                                {% if form.phone_number.error %}
-                                <div class="alert alert-danger alert-dismissible fade show ">{{ form.phone_number.error }}</div>
+                                {% if form.phone_number.errors %}
+                                <div class="alert alert-danger alert-dismissible fade show ">{{ form.phone_number.errors }}</div>
                                 {% endif %}
                         </div>
                         <div class="col-md-12 mb-3">
@@ -65,8 +65,8 @@
                                 доставки*:</label>
                             <textarea class="form-control" id="id_delivery_address"
                                 name="delivery_address" rows="2"></textarea>
-                                {% if form.delivery_address.error %}
-                                <div class="alert alert-danger alert-dismissible fade show ">{{ form.delivery_address.error }}</div>
+                                {% if form.delivery_address.errors %}
+                                <div class="alert alert-danger alert-dismissible fade show ">{{ form.delivery_address.errors }}</div>
                                 {% endif %}
                         </div>
                         <div class="col-md-12 mb-3">

@@ -36,7 +36,7 @@ class Order(models.Model):
 
 
 
-class OrderTime(models.Model):
+class OrderItem(models.Model):
     order = models.ForeignKey(to=Order, on_delete=models.CASCADE)
     product = models.ForeignKey(to=Products, on_delete=models.SET_DEFAULT, null=True, default=None)
     name = models.CharField(max_length=150)
