@@ -1,5 +1,7 @@
+from typing import Any
 from django import forms
 from orders.models import Order
+import re
 
 
 class OrderForm(forms.Form):
@@ -17,6 +19,17 @@ class OrderForm(forms.Form):
         ('0', False),
         ('1', True),
     ])
+
+    def clean_phone_number(self):
+        data = self.cleaned_data['phone_number']
+
+        if not data.isdigit():
+            raise forms.ValidationError('Number should consist only digits')
+        
+        pattern = re.compile(r'^\d{10}$')
+        if not pattern.match(data):
+            raise forms.ValidationError('Not correct format')
+        return data
 
     # first_name = forms.CharField(
     #     widget=forms.TextInput(
