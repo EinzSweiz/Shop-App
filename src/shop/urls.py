@@ -16,10 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from main import urls as mainurls
-from goods import urls as goodsurls
-from users import urls as usersurls
-from cards import urls as cardsurls
+from main import urls as main_urls
+from goods import urls as goods_urls
+from users import urls as users_urls
+from cards import urls as cards_urls
+from orders import urls as orders_urls
 from django.conf import settings
 from main.views import custom_404_view
 from django.conf.urls.static import static
@@ -27,10 +28,11 @@ DEBUG = getattr(settings, 'DEBUG')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(mainurls)),
-    path('catalog/', include(goodsurls)),
-    path('user/', include(usersurls)),
-    path('bascket/', include(cardsurls)),
+    path('', include(main_urls)),
+    path('catalog/', include(goods_urls)),
+    path('user/', include(users_urls)),
+    path('bascket/', include(cards_urls)),
+    path('orders/', include(orders_urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
