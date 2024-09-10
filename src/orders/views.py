@@ -6,8 +6,10 @@ from orders.forms import OrderForm
 from django.shortcuts import redirect
 from orders.models import Order, OrderItem
 from django.db import transaction
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def create_order(request):
     if request.method == 'POST':
         form = OrderForm(request.POST)
