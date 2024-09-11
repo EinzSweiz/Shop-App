@@ -52,7 +52,7 @@ class OrderItem(models.Model):
     objects = OrderItemQueryset.as_manager()
 
     def products_price(self):
-        return round(self.product.price * self.product.quantity, 2)
+        return round(self.price * self.quantity, 2)
     
     def __str__(self) -> str:
         return f'Product {self.name} | Order {self.order.pk}'

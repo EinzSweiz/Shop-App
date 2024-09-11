@@ -1,20 +1,28 @@
+from typing import Any
 from django.shortcuts import render
+from django.views.generic import TemplateView
 
 
-def index(request):
-    context = {
-        'title': 'Home - Main',
-        'content': 'Магазин мебели HOME',
-    }
-    return render(request, 'main/index.html', context)
+
+class IndexView(TemplateView):
+    template_name = 'main/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Home - Main'
+        context['content'] = 'Shop of Furniture - Home'
+        return context
 
 
-def about(request):
-    context = {
-        'title': 'About-us',
-        'content': 'About Us'
-    }
-    return render(request, 'main/about.html', context)
+
+class AboutView(TemplateView):
+    template_name = 'main/about.html'
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context =  super().get_context_data(**kwargs)
+        context['title'] = 'About-us'
+        context['content'] = 'This site was created by DarkKnight'
+        return context
 
 
 def custom_404_view(request, exception):

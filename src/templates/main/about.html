@@ -1,17 +1,58 @@
-{% extends 'base.html' %}
 {% load static %}
-{% block css%}
-<link rel="stylesheet" href="{% static 'deps/css/my_footer_css.css' %}">
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centered Text with Background Image</title>
+    <style>
+        /* Make the entire body take up the full height and set the background image */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
 
-{% block content %}
-<h1 class="mt-5 pt-5"><strong>{{ content }}</strong></h1>
-{% endblock %}
+        .background {
+            /* Full-screen background image */
+            background-image: url("{% static 'deps/images/dark-knight-fantasy-digital-illustration_379823-4767.avif' %}");  /* Make sure to replace this with the correct static path */
+            height: 100%;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-{% block footer %}
-<footer class="py-4 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Home Python Hub Studio 2023</p>
+        .center-text {
+            /* Style for centered text */
+            background-color: rgba(255, 255, 255, 0.8);  /* Slightly transparent white background */
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: #333;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<div class="background">
+    <div class="center-text">
+        <h1>Metsuki Sutemi-Till the end!</h1>
+        <p>In Japanese, there is the concept of “metsuki sutemi” – “the look going to death.” The expression means total determination to go to the end.</p>
     </div>
-</footer>
-{% endblock %}
+</div>
+</html>
