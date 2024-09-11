@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import logout, login
 from django.db.models import Prefetch
 from cards.models import Card
+from common.mixins import CacheMixin
 from orders.models import Order, OrderItem
 from .forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 from django.contrib import messages
@@ -70,7 +71,7 @@ class RegisterUserView(CreateView):
                 return redirect(self.success_url)
             
 
-class ProfileUserView(LoginRequiredMixin, UpdateView):
+class ProfileUserView(CacheMixin, LoginRequiredMixin, UpdateView):
     template_name = 'users/profile.html'
     form_class = UserProfileForm
     success_url = reverse_lazy('users:profile')
@@ -89,16 +90,13 @@ class ProfileUserView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Profile'
-        orders = cache.get(f'users_orders_{self.request.user.id}')
-        if not orders:
-            orders = Order.objects.filter(user=self.request.user).prefetch_related(
-                Prefetch(
-                    'orderitem_set',
-                    queryset=OrderItem.objects.select_related('product').order_by('-id')
-                )
+        orders = Order.objects.filter(user=self.request.user).prefetch_related(
+            Prefetch(
+                'orderitem_set',
+                queryset=OrderItem.objects.select_related('product').order_by('-id')
             )
-            cache.set(f'users_orders_{self.request.user.id}', orders, 600)
-        context['orders'] = orders
+        )
+        context['orders'] = self.set_get_cache(orders, f'users_order_{self.request.user.id}', 600)
         return context
 
 
