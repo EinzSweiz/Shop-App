@@ -89,15 +89,15 @@ class ProfileUserView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Profile'
-        orders = cache.get(f'orders_for_user_{self.request.user.id}')
+        orders = cache.get(f'users_orders_{self.request.user.id}')
         if not orders:
-            context['orders'] = Order.objects.filter(user=self.request.user).prefetch_related(
+            orders = Order.objects.filter(user=self.request.user).prefetch_related(
                 Prefetch(
                     'orderitem_set',
                     queryset=OrderItem.objects.select_related('product').order_by('-id')
                 )
             )
-            cache.set(f'orders_for_user_{self.request.user.id}', orders, 3600)
+            cache.set(f'users_orders_{self.request.user.id}', orders, 600)
         context['orders'] = orders
         return context
 
