@@ -2,6 +2,7 @@
 src/staticfiles/vendors
 src/commando
 src/helpers
+src/cache
 #ignore local cdn
 local-cdn/
 # Byte-compiled / optimized / DLL files

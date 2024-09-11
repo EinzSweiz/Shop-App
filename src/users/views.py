@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.cache import cache
 from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
 from django.forms import BaseModelForm
@@ -88,12 +89,16 @@ class ProfileUserView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Profile'
-        context['orders'] = Order.objects.filter(user=self.request.user).prefetch_related(
-            Prefetch(
-                'orderitem_set',
-                queryset=OrderItem.objects.select_related('product').order_by('-id')
+        orders = cache.get(f'orders_for_user_{self.request.user.id}')
+        if not orders:
+            context['orders'] = Order.objects.filter(user=self.request.user).prefetch_related(
+                Prefetch(
+                    'orderitem_set',
+                    queryset=OrderItem.objects.select_related('product').order_by('-id')
+                )
             )
-        )
+            cache.set(f'orders_for_user_{self.request.user.id}', orders, 3600)
+        context['orders'] = orders
         return context
 
 

@@ -18,10 +18,10 @@ class CreateOrderView(LoginRequiredMixin, FormView):
     success_url = reverse_lazy('users:profile')
 
     def get_initial(self):
-        initinal = super().get_initial()
-        initinal['first_name'] = self.request.user.first_name
-        initinal['last_name'] = self.request.user.last_name
-        return initinal 
+        initial = super().get_initial()
+        initial['first_name'] = self.request.user.first_name
+        initial['last_name'] = self.request.user.last_name
+        return initial 
     
     def form_valid(self, form):
         try:
@@ -44,7 +44,7 @@ class CreateOrderView(LoginRequiredMixin, FormView):
 
                         if product.quantity < quantity:
                             raise ValidationError(f'Not enough product {name} in store\
-                                                in stock {quantity}')
+                                                in stock {product.quantity}')
                         OrderItem.objects.create(
                             order=order,
                             product=product,
@@ -68,6 +68,7 @@ class CreateOrderView(LoginRequiredMixin, FormView):
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
         context['title'] = 'Create Order'
+        context['order'] = True
         return context
 # @login_required
 # def create_order(request):
